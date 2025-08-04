@@ -13,9 +13,11 @@ Features
 🎨 Styled using CSS and Material UI
 
 
-Technologies Used
-
+Technologies Used:
 React
+
 OpenWeatherMap API
+
 Material UI
+
 CSS
