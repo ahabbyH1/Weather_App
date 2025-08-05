@@ -2,6 +2,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import './Search.css';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 export default function Search({updateInfo})
 {
@@ -30,6 +31,29 @@ export default function Search({updateInfo})
         throw err;
         }
     }
+    useEffect(() => {
+    let initResult = async () => {
+        try {
+            let response = await fetch(`${API_URL}?q=Hyderabad&appid=${API_KEY}&units=metric`);
+            let jsonResponse = await response.json();
+            let result = {
+                city: "Hyderabad",
+                temp: jsonResponse.main.temp,
+                tempmax: jsonResponse.main.temp_max,
+                tempmin: jsonResponse.main.temp_min,
+                humidity: jsonResponse.main.humidity,
+                feelslike: jsonResponse.main.feels_like,
+                description: jsonResponse.weather[0].description,
+            };
+            console.log(result);
+            updateInfo(result);  // ✅ Add this line
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    initResult();
+}, []);
+
     let handleInputChange = (event) => {
         setCity(event.target.value)
     }
